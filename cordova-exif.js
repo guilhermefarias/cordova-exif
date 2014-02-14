@@ -2,6 +2,67 @@ var CordovaExif = (function () {
 
 	var Exif, FileHandle, BinaryImage;
 
+	FileHandle = {
+		url: null,
+		callback: null,
+		getExif: false,
+
+		setup: function(imageURI, callback, getExif) {
+			FileHandle.url = imageURI;
+			FileHandle.callback = callback;
+
+			if(getExif){
+				FileHandle.getExif = getExif;
+			}
+
+			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, FileHandle.gotFS, FileHandle.fail);
+		},
+
+		readData: function(imageURI, callback){
+			FileHandle.setup(imageURI, callback, true);
+		},
+
+		readBase64: function(imageURI, callback){
+			FileHandle.setup(imageURI, callback, false);
+		},
+
+		gotFS: function(fileSystem) {
+			window.resolveLocalFileSystemURI(FileHandle.url, FileHandle.gotFileEntry, FileHandle.fail);
+		},
+
+		gotFileEntry: function(fileEntry) {
+			fileEntry.file(FileHandle.readFile, FileHandle.fail);
+		},
+
+		fail: function(error) {
+			// error.code
+		},
+
+		readFile: function(file){
+			var fileReader = new FileReader();
+			fileReader.onload = FileHandle.readFileSuccess;
+			fileReader.readAsBinaryString(file);
+		},
+
+		readFileSuccess: function(e){
+			var binaryImage,
+				binTarget = e.target.result;
+
+			if(!FileHandle.getExif){
+				FileHandle.callback(window.btoa(binTarget));
+				return false;
+			}
+
+			binaryImage = new BinaryImage(binTarget);
+			FileHandle.handleBinaryImage(binaryImage);
+		},
+
+		handleBinaryImage: function(binaryImage){
+			var exifObject = Exif.find(binaryImage);
+			FileHandle.callback(exifObject);
+		}
+	};
+
 	Exif = {
 		find: function(image){
 			var marker,
@@ -544,17 +605,17 @@ var CordovaExif = (function () {
 
 		this.getByteAt = function(imageOffset) {
 			return imageBin.charCodeAt(imageOffset + dataOffset) & 0xFF;
-		}
+		};
 
 		this.getBytesAt = function(imageOffset, imageLength) {
 			var bytesArray = [];
 
 			for (var i = 0; i < imageLength; i++) {
-				bytesArray[i] = imageBin.charCodeAt((imageOffset + i) + dataOffset) & 0xFF
+				bytesArray[i] = imageBin.charCodeAt((imageOffset + i) + dataOffset) & 0xFF;
 			}
 
 			return bytesArray;
-		}
+		};
 
 		this.getShortAt = function(imageOffset, binaryBigEndian) {
 			var imageShort;
@@ -570,7 +631,7 @@ var CordovaExif = (function () {
 			}
 
 			return imageShort;
-		}
+		};
 
 		this.getLongAt = function(imageOffset, binaryBigEndian) {
 			var imageShort,
@@ -590,7 +651,7 @@ var CordovaExif = (function () {
 			}
 
 			return imageShort;
-		}
+		};
 
 		this.getSLongAt = function(imageOffset, binaryBigEndian) {
 			var imageUnsignedLong = this.getLongAt(imageOffset, binaryBigEndian);
@@ -600,7 +661,7 @@ var CordovaExif = (function () {
 			}
 
 			return imageUnsignedLong;
-		}
+		};
 
 		this.getStringAt = function(imageOffset, imageLength) {
 			var bytesArray,
@@ -613,9 +674,13 @@ var CordovaExif = (function () {
 			}
 
 			return stringArray.join('');
-		}
+		};
 	};
 
-	return {};
+
+	return {
+		readData: FileHandle.readData,
+		readBase64: FileHandle.readBase64
+	};
 
 })();
