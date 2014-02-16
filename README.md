@@ -18,6 +18,13 @@ CordovaExif.readData(imageURI, function(exifObject) {
 });
 ```
 
+OBS: To get the Exif data, you application need to have access permission to the file.
+If you are using Cordova version 3.3 or later, install the following plugins:
+```sheel
+cordova plugin add org.apache.cordova.camera
+cordova plugin add org.apache.cordova.file
+```
+
 ## What is Exif?
 
 Is a standard followed by manufacturers of digital cameras that record information about the technical conditions of image capture on the image file itself in the form of tagged metadata.
@@ -28,9 +35,32 @@ If you want know more about technical information, see these links:
 - [Exif Tags](http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html)
 
 
-## Exif Data
+## Example of Exif Data on photo
 
-![Image with Exif Data](http://i57.tinypic.com/21ahcoi.png)
+| Key | Value |
+|-----|-------|
+| Make | Canon |
+| Model | Canon EOS 60D |
+| DateTime | 2014:02:16 15:00:00 |
+| XResolution | 240 |
+| YResolution | 240 |
+| Resolution Unit | Inch |
+| FNumber | f/8.0 |
+| Focal Length | 100 mm |
+| GPS Latitude | -8.053889 |
+| GPS Longitude | -34.880833 |
+| Exposure Program | Aperture priority |
+| Flash | Flash fired, compulsory flash mode |
+| Metering Mode | Pattern |
+| Exposure Time | 0.004 |
+| Shutter SpeedValue | 7.965784 |
+| Custom Rendered  | Normal process |
+| White Balance | Auto white balance |
+| ISO Speed Ratings | (100) |
+| Lens Model | EF100mm f/2.8L Macro IS USM |
+| Lens Serial Number | 0000023967 |
+| Lens Specification | (100,100,0,0) |
+| This is just somes examples, has much more informations. | ... |
 
 
 ## Complete Example
