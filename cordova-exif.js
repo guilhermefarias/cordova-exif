@@ -27,7 +27,7 @@ var CordovaExif = (function () {
 		},
 
 		gotFS: function(fileSystem) {
-			window.resolveLocalFileSystemURI(FileHandle.url, FileHandle.gotFileEntry, FileHandle.fail);
+			window.resolveLocalFileSystemURL(FileHandle.url, FileHandle.gotFileEntry, FileHandle.fail);
 		},
 
 		gotFileEntry: function(fileEntry) {
