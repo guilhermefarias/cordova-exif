@@ -4,11 +4,11 @@ This plugin, is the simplest way to get exif data of images at Cordova platform 
 
 ## Getting Started
 
-Import the source
+### Installing
 
-```html
-<script type="text/javascript" src="cordova-exif.js"></script>
-```
+	cordova plugin add https://github.com/domax/cordova-exif.git --save
+
+### Usage
 
 Pass imageURI and get the object with EXIF information
 
