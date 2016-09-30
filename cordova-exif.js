@@ -684,3 +684,5 @@ var CordovaExif = (function () {
 	};
 
 })();
+
+module.exports = CordovaExif;
