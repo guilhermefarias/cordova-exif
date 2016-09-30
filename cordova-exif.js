@@ -601,7 +601,7 @@ var CordovaExif = (function () {
 
 	BinaryImage = function(imageBin) {
 		var dataOffset = 0;
-
+		this.length = imageBin.length;
 
 		this.getByteAt = function(imageOffset) {
 			return imageBin.charCodeAt(imageOffset + dataOffset) & 0xFF;
