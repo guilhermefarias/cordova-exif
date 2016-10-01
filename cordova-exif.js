@@ -65,28 +65,19 @@ var CordovaExif = (function () {
 
 	Exif = {
 		find: function(image){
-			var marker,
-				offset = 2,
-				exifOffset;
-
 			// Check if is a valid JPEG
-			if (image.getByteAt(0) !== 0xFF || image.getByteAt(1) !== 0xD8) {
-				return false;
-			}
+			if (image.getByteAt(0) !== 0xFF || image.getByteAt(1) !== 0xD8) return false;
 
+			var offset = 2;
 			while (offset < image.length) {
-				if (image.getByteAt(offset) !== 0xFF) {
-					return false;
-				}
-
-				marker = image.getByteAt(offset+1);
-
-				// Check if is a EXIF marker
-				if(marker === 225) {
-					exifOffset = offset + 4;
-					return Exif.read(image, exifOffset);
-				}
+				if (image.getByteAt(offset) === 0xFF) {
+					// Check if is a EXIF marker
+					if (image.getByteAt(offset + 1) === 0xE1)
+						return Exif.read(image, offset + 4);
+					offset += 2;
+				} else ++offset;
 			}
+			return false;
 		},
 
 		read: function(image, start){
