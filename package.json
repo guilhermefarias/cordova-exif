@@ -1,0 +1,48 @@
+{
+	"name": "cordova-plugin-exif",
+	"version": "1.0.0",
+	"description": "The simplest way to get EXIF data of images at Cordova/Phonegap platform",
+	"cordova": {
+		"id": "cordova-plugin-exif",
+		"platforms": [
+			"android",
+			"amazon-fireos",
+			"ubuntu",
+			"ios",
+			"wp7",
+			"wp8",
+			"blackberry10",
+			"windows8",
+			"firefoxos",
+			"windows"
+		]
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/guilhermefarias/cordova-exif"
+	},
+	"keywords": [
+		"cordova",
+		"camera",
+		"file",
+		"exif",
+		"ecosystem:cordova",
+		"cordova-android",
+		"cordova-amazon-fireos",
+		"cordova-ubuntu",
+		"cordova-ios",
+		"cordova-wp7",
+		"cordova-wp8",
+		"cordova-blackberry10",
+		"cordova-windows8",
+		"cordova-firefoxos",
+		"cordova-windows"
+	],
+	"engines": {
+		"cordovaDependencies": {
+			"3.0.0": {
+				"cordova": ">100"
+			}
+		}
+	}
+}
